@@ -1,5 +1,6 @@
 package com.fra.pokemonproject.repo
 
+import com.fra.pokemonproject.constant.ConstantURL
 import com.fra.pokemonproject.dao.RemotePokemonDAO
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,5 +15,6 @@ class PokemonRepository @Inject constructor(
     private val pokemonDAO: RemotePokemonDAO?
 ) {
     suspend fun getPokemonFromInfo(info : String) = pokemonDAO?.getPokemonFromInfo(info)
+    suspend fun getAllPaged(page: Int) = pokemonDAO?.getAllPaged(page * ConstantURL.POKEMON_API_PAGE_SIZE)
     suspend fun getAll() = pokemonDAO?.getAll()
 }

@@ -16,14 +16,15 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class PokemonResponseWrapper(
     val status: String? = null,
-    val pokemonResponse : PokemonResponse? = null
+    val pokemonResponse : PokemonResponse? = null,
+    val page: Int = 0
 ) : Parcelable
 
 @Parcelize
 data class PokemonResponse (
-    val count : Int,
-    val next : String,
-    val previous : String,
+    val count : Int = 0,
+    val next : String? = null,
+    val previous : String? = null,
     val results : List<Pokemon>
 ) : Parcelable {
 /*
@@ -52,6 +53,19 @@ data class PokemonResponse (
 
 @Parcelize
 data class Pokemon(
-    val name : String,
-    val url : String
+    val name : String = "",
+    val url : String = "",
+    var sprites : Aspect? = null
+) : Parcelable
+
+@Parcelize
+data class Aspect(
+    var back_default: String?,
+    var back_female: String?,
+    var back_shiny: String?,
+    var back_shiny_female: String?,
+    var front_default: String?,
+    var front_female: String?,
+    var front_shiny: String?,
+    var front_shiny_female: String?,
 ) : Parcelable
