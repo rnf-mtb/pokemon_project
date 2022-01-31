@@ -134,10 +134,10 @@ class PokemonListViewActivity : AppCompatActivity(), PokemonListAdapterListener 
             override var isLoading: Boolean = false
         })
 
-/*        activityListBinding.swipeRefreshLayout.setOnRefreshListener {
+        activityListBinding.swipeRefreshLayout.setOnRefreshListener {
             pkmnVM.allPokemonWrapper
             activityListBinding.swipeRefreshLayout.isRefreshing = false
-        }*/
+        }
 
         //activityListBinding.swipeRefreshLayout.isRefreshing = true
 
