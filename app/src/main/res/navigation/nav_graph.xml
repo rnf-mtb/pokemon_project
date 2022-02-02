@@ -3,26 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/FragmentList">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.fra.pokemonproject.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/FragmentList"
+        android:name="com.fra.pokemonproject.ui.fragment.PokemonListFragment"
+        android:label="@string/list_fragment_label"
+        tools:layout="@layout/pokemon_list">
 
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.fra.pokemonproject.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/FragmentDetail"
+        android:name="com.fra.pokemonproject.ui.fragment.PokemonDetailFragment"
+        android:label="@string/detail_fragment_label"
+        tools:layout="@layout/pokemon_detail">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_detail_to_list"
+            app:destination="@id/FragmentList" />
     </fragment>
 </navigation>

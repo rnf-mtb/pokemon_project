@@ -18,6 +18,8 @@ class PokemonListViewModel @Inject constructor(
     val allPokemonWrapper : LiveData<PokemonResponseWrapper> = _allPokemon
     private val _pokemon = MutableLiveData<PokemonResponseWrapper>()
     val pokemonWrapper : LiveData<PokemonResponseWrapper> = _pokemon
+    private val _event = MutableLiveData<NavigationEvent>()
+    val eventWrapper : LiveData<NavigationEvent> = _event
 
     init {
         Log.d("PokemonListViewModel", "init called")
@@ -44,4 +46,21 @@ class PokemonListViewModel @Inject constructor(
         }
     }
 
+    fun navigate(route: NavigationEvent) = viewModelScope.launch {
+        _event.postValue(route)
+    }
+
 }
+
+/*enum class NavigationEvent(route: String) {
+    GO_TO_HOME( "GO_TO_HOME"),
+    GO_TO_LIST("GO_TO_LIST"),
+    GO_TO_DETAIL( "GO_TO_DETAIL")
+}*/
+
+sealed class NavigationEvent {
+    data class Home constructor(val pkmn: Pokemon) : NavigationEvent()
+    data class List constructor(val pkmn: Pokemon) : NavigationEvent()
+    data class Detail constructor(val pkmn: Pokemon) : NavigationEvent()
+}
+
