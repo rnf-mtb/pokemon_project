@@ -15,6 +15,9 @@ interface RemotePokemonDAO {
     @GET("pokemon/{info}")
     suspend fun getPokemonFromInfo(@Path("info") info: String) : Pokemon
 
+    @GET("pokemon/{info}")
+    suspend fun getPokemonFromInfoNew(@Path("info") info: String) : Pokemon
+
     @GET("pokemon/")
     suspend fun getAllPaged(@Query("offset") offset: Int, @Query("limit") limit: Int = ConstantURL.POKEMON_API_PAGE_SIZE) : PokemonResponse
 

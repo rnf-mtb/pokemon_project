@@ -20,11 +20,16 @@ import com.fra.pokemonproject.ui.adapter.PokemonListAdapterListener
 import com.fra.pokemonproject.ui.vm.NavigationEvent
 import com.fra.pokemonproject.ui.vm.PokemonListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
+@DelicateCoroutinesApi
 @AndroidEntryPoint
 class PokemonListFragment : Fragment(), PokemonListAdapterListener {
     companion object{ val TAG = "PokemonListFragment" }
@@ -56,24 +61,24 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
 
         pkmnVM.pokemonWrapper.observe(this, { resp ->
             _isLoading = false
-            fillListWithSinglePokemonInfo(resp)
+            fillListWithListPokemonInfo(resp)
         })
 
         pkmnVM.allPokemonWrapper.observe(this, Observer { response ->
             _responseWrapper = response
             when (response.status){
-                "OK" -> response.pokemonResponse?.results?.let{
+                "OK" -> response.pokemonResponse?.results?.let{ pokemonList ->
                     Toast.makeText(context, "OK response.status", Toast.LENGTH_SHORT).show()
-                    if(it.isEmpty()) {
+                    if(pokemonList.isEmpty()) {
                         _isLoading = false
                     }
 
-                    _pkmnList.addAll(it)
+                    _pkmnList.addAll(pokemonList)
 
-                    for (pokemon in it){
-                        _isLoading = true
-                        pkmnVM.getSinglePokemon(pokemon.name)
+                    GlobalScope.launch(Dispatchers.Main) {
+                        pkmnVM.getPokemonListMoreInfo(_pkmnList)
                     }
+
 
                     _isLastPage = response.pokemonResponse.next.isNullOrBlank()
                 }
@@ -124,6 +129,26 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun fillListWithListPokemonInfo(resp: PokemonResponseWrapper) {
+        when (resp?.status) {
+            "OK" -> resp.pokemonResponse?.results?.forEach { singlePokemon ->
+                Toast.makeText(context, "OK fillListWithSinglePokemonInfo", Toast.LENGTH_SHORT).show()
+
+                if (_pkmnList.find { it.name == singlePokemon?.name } != null) {
+                    _pkmnList.find { it.name == singlePokemon?.name }.let {
+                        it?.sprites = singlePokemon?.sprites
+                        pokemonListAdapter.setPokemonList(_pkmnList, _currentPage, this)
+                    }
+                } else {
+                    Log.d(TAG, String.format("pokemon %s not found", singlePokemon?.name))
+                }
+            }
+            "KO" -> {
+                Toast.makeText(context, "KO fillListWithSinglePokemonInfo", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun fillListWithSinglePokemonInfo(resp: PokemonResponseWrapper?) {
