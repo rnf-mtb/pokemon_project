@@ -80,9 +80,6 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
 
                     GlobalScope.launch(Dispatchers.Main) {
                         pkmnVM.getPokemonListMoreInfo(_pkmnList)
-/*                        for (pokemon in _pkmnList) {
-                            pkmnVM.getPokemonListMoreInfo(pokemon)
-                        }*/
                     }
                     _isLastPage = response.pokemonResponse.next.isNullOrBlank()
                 }
@@ -126,6 +123,7 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = true
+            pkmnVM.getAllPokemon(_currentPage)
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
@@ -136,7 +134,7 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
     }
 
     private fun fillListWithListPokemonInfo(resp: PokemonResponseWrapper) {
-        when (resp?.status) {
+        when (resp.status) {
             "OK" -> resp.pokemonResponse?.results?.forEach { singlePokemon ->
                 Toast.makeText(context, "OK fillListWithSinglePokemonInfo", Toast.LENGTH_SHORT).show()
 
@@ -183,9 +181,5 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
     override fun onItemClick(pkmn: Pokemon) {
         Toast.makeText(context, String.format("clicked %s", pkmn.name), Toast.LENGTH_SHORT).show()
         pkmnVM.navigate(NavigationEvent.Detail(pkmn))
-
-        /*val amount = pkmn
-        val action = FragmentList.confirmationAction(amount)
-        v.findNavController().navigate(action)*/
     }
 }

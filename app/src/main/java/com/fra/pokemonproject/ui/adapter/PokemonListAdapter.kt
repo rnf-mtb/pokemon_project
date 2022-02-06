@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 
 class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private val TAG = "PokemonListAdapter"
     private var _pkmnList = mutableListOf<Pokemon>()
     private var _pkmnListAdapterListener : PokemonListAdapterListener? = null
     private val LOADING = 0
@@ -28,7 +29,7 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     ) : RecyclerView.ViewHolder(pokemonItemActivityListBinding.root) {
 
         fun bind(pkmn: Pokemon){
-            Log.d("PokemonListAdapter", String.format("bind"))
+            Log.d(TAG, String.format("bind"))
             pokemonItemActivityListBinding.apply {
                 val img = Glide.with(this.img.context).load(pkmn.sprites?.front_default).into(this.img)
                 this.name.text = pkmn.name
@@ -44,21 +45,21 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val progressBar: ProgressBar = loadingItemActivityListBinding.progressbar
 
         fun bind(){
-            Log.d("PokemonListAdapter", String.format("LoadingViewHolder bind"))
+            Log.d(TAG, String.format("LoadingViewHolder bind"))
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        Log.d("PokemonListAdapter", "onCreateViewHolder")
+        Log.d(TAG, "onCreateViewHolder")
 
         return when (viewType) {
             ITEM -> {
-                Log.d("PokemonListAdapter", "onCreateViewHolder ITEM CREATED")
+                Log.d(TAG, "onCreateViewHolder ITEM CREATED")
                 PokemonViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context),
                     R.layout.pokemon_item_list, parent, false))
             }
             else -> {
-                Log.d("PokemonListAdapter", "onCreateViewHolder LOADING CREATED")
+                Log.d(TAG, "onCreateViewHolder LOADING CREATED")
                 LoadingViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context),
                     R.layout.loading_item_list, parent, false))
             }
@@ -68,9 +69,9 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = _pkmnList.size
 
     fun setPokemonList(pkmnList: List<Pokemon>, page: Int, pokemonListAdapterListener: PokemonListAdapterListener) {
-        Log.d("PokemonListAdapter", String.format("setPokemonList"))
+        Log.d(TAG, String.format("setPokemonList"))
         _pkmnListAdapterListener = pokemonListAdapterListener
-        Log.d("PokemonListAdapter", String.format("pkmnList size %d", _pkmnList.size))
+        Log.d(TAG, String.format("pkmnList size %d", _pkmnList.size))
         if(page == 0) {
             //_pkmnList.clear()
         } else {
@@ -79,26 +80,23 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
         //_pkmnList.clear()
         _pkmnList.addAll(pkmnList)
-        Log.d("PokemonListAdapter", String.format("notifyDataSetChanged done _pkmnList size is %d", _pkmnList.size))
+        Log.d(TAG, String.format("notifyDataSetChanged done _pkmnList size is %d", _pkmnList.size))
         addLoadingFooter()
 
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        Log.d("PokemonListAdapter", "onBindViewHolder")
+        Log.d(TAG, "onBindViewHolder")
         val pkmn: Pokemon = _pkmnList[position]
         when (getItemViewType(position)) {
             ITEM -> {
-                Log.d("PokemonListAdapter", "onCreateViewHolder ITEM BOUND")
+                Log.d(TAG, "onCreateViewHolder ITEM BOUND")
                 val pokemonViewHolder: PokemonViewHolder = holder as PokemonViewHolder
                 pokemonViewHolder.bind(pkmn)
-                /*Glide.with(context).load(movie.getImageUrl())
-                    .apply(RequestOptions.centerCropTransform())
-                    .into<Target<Drawable>>(movieViewHolder.movieImage)*/
             }
             LOADING -> {
-                Log.d("PokemonListAdapter", "onCreateViewHolder LOADING BOUND")
+                Log.d(TAG, "onCreateViewHolder LOADING BOUND")
                 val loadingViewHolder = holder as LoadingViewHolder
                 loadingViewHolder.progressBar.visibility = View.VISIBLE
                 loadingViewHolder.bind()
@@ -113,11 +111,11 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun addLoadingFooter() {
         isLoadingAdded = true
         add(Pokemon("", "", null))
-        Log.d("PokemonListAdapter", String.format("addLoadingFooter pkmnList %d", _pkmnList.size))
+        Log.d(TAG, String.format("addLoadingFooter pkmnList %d", _pkmnList.size))
     }
 
     fun removeLoadingFooter() {
-        Log.d("PokemonListAdapter", String.format("removeLoadingFooter pkmnList %d", _pkmnList.size))
+        Log.d(TAG, String.format("removeLoadingFooter pkmnList %d", _pkmnList.size))
         isLoadingAdded = false
         val footerPosition: Int = _pkmnList.size - 1
         if(getItem(footerPosition) != null) {
@@ -138,13 +136,13 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun clear(){
-        Log.d("PokemonListAdapter", String.format("clearing"))
+        Log.d(TAG, String.format("clearing"))
         _pkmnList.clear()
-        Log.d("PokemonListAdapter", String.format("_pkmnList size %d ",_pkmnList.size))
+        Log.d(TAG, String.format("_pkmnList size %d ",_pkmnList.size))
     }
 
     private fun getItem(position: Int): Pokemon? {
-        Log.d("PokemonListAdapter", String.format("position %d listSize %d", position, _pkmnList.size))
+        Log.d(TAG, String.format("position %d listSize %d", position, _pkmnList.size))
         return if(position > 0 && _pkmnList.size -1 >= position) { //last item
             _pkmnList[position]
         }

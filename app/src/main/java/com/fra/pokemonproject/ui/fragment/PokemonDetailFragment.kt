@@ -32,8 +32,6 @@ class PokemonDetailFragment : Fragment() {
     private var _binding: PokemonDetailBinding? = null
     private var _pkmn = Pokemon()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -57,6 +55,8 @@ class PokemonDetailFragment : Fragment() {
             setImage(_pkmn.sprites?.front_shiny, binding.img3)
             setImage(_pkmn.sprites?.back_shiny, binding.img4)
         }
+
+
 
         binding.backButton.setOnClickListener {
              parentFragmentManager.beginTransaction().remove(this).commit()

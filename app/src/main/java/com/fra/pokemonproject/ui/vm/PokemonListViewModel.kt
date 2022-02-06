@@ -12,7 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.uniflow.android.AndroidDataFlow
 import kotlinx.coroutines.*
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(
