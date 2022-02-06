@@ -13,6 +13,7 @@ import com.fra.pokemonproject.R
 import com.fra.pokemonproject.databinding.LoadingItemListBinding
 
 import android.widget.ProgressBar
+import com.bumptech.glide.Glide
 
 class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -29,6 +30,7 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(pkmn: Pokemon){
             Log.d("PokemonListAdapter", String.format("bind"))
             pokemonItemActivityListBinding.apply {
+                val img = Glide.with(this.img.context).load(pkmn.sprites?.front_default).into(this.img)
                 this.name.text = pkmn.name
                 this.url.text = pkmn.sprites?.front_default
                 this.pokemonRow.setOnClickListener{ _pkmnListAdapterListener?.onItemClick(pkmn) }
@@ -79,6 +81,7 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         _pkmnList.addAll(pkmnList)
         Log.d("PokemonListAdapter", String.format("notifyDataSetChanged done _pkmnList size is %d", _pkmnList.size))
         addLoadingFooter()
+
         notifyDataSetChanged()
     }
 
@@ -135,7 +138,9 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun clear(){
+        Log.d("PokemonListAdapter", String.format("clearing"))
         _pkmnList.clear()
+        Log.d("PokemonListAdapter", String.format("_pkmnList size %d ",_pkmnList.size))
     }
 
     private fun getItem(position: Int): Pokemon? {

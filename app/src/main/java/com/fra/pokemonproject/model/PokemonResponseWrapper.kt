@@ -55,7 +55,8 @@ data class PokemonResponse (
 data class Pokemon(
     val name : String = "",
     val url : String = "",
-    var sprites : Aspect? = null
+    var sprites : Aspect? = null,
+    var localImgPath : String = ""
 ) : Parcelable
 
 @Parcelize

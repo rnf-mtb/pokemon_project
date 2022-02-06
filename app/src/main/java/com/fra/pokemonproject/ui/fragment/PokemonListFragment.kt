@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.fra.pokemonproject.databinding.PokemonListBinding
 import com.fra.pokemonproject.model.Pokemon
 import com.fra.pokemonproject.model.PokemonResponseWrapper
@@ -56,6 +57,8 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        _pkmnList.clear()
+
         val linearLayoutManager = LinearLayoutManager(context)
         binding.pokemonList.layoutManager = linearLayoutManager
 
@@ -67,9 +70,9 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
         pkmnVM.allPokemonWrapper.observe(this, Observer { response ->
             _responseWrapper = response
             when (response.status){
-                "OK" -> response.pokemonResponse?.results?.let{ pokemonList ->
+                "OK" -> response.pokemonResponse?.results?.let { pokemonList ->
                     Toast.makeText(context, "OK response.status", Toast.LENGTH_SHORT).show()
-                    if(pokemonList.isEmpty()) {
+                    if (pokemonList.isEmpty()) {
                         _isLoading = false
                     }
 
@@ -77,9 +80,10 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
 
                     GlobalScope.launch(Dispatchers.Main) {
                         pkmnVM.getPokemonListMoreInfo(_pkmnList)
+/*                        for (pokemon in _pkmnList) {
+                            pkmnVM.getPokemonListMoreInfo(pokemon)
+                        }*/
                     }
-
-
                     _isLastPage = response.pokemonResponse.next.isNullOrBlank()
                 }
                 "KO" -> {

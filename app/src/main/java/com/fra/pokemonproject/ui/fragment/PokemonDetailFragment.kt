@@ -1,20 +1,36 @@
 package com.fra.pokemonproject.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.fra.pokemonproject.R
 import com.fra.pokemonproject.databinding.PokemonDetailBinding
+import com.fra.pokemonproject.model.Pokemon
+import com.fra.pokemonproject.ui.activity.PokemonListViewActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class PokemonDetailFragment : Fragment() {
-    companion object { val TAG = "PokemonDetailFragment" }
+    companion object {
+        val TAG = "PokemonDetailFragment"
+        val DETAIL = "DETAIL"
+    }
     private var _binding: PokemonDetailBinding? = null
+    private var _pkmn = Pokemon()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,9 +39,11 @@ class PokemonDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         _binding = PokemonDetailBinding.inflate(inflater, container, false)
+        arguments.let {
+            _pkmn = it?.getParcelable(DETAIL) ?: Pokemon()
+        }
         return binding.root
 
     }
@@ -33,8 +51,21 @@ class PokemonDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_detail_to_list)
+        GlobalScope.launch(Dispatchers.Main) {
+            setImage(_pkmn.sprites?.front_default, binding.img1)
+            setImage(_pkmn.sprites?.back_default, binding.img2)
+            setImage(_pkmn.sprites?.front_shiny, binding.img3)
+            setImage(_pkmn.sprites?.back_shiny, binding.img4)
+        }
+
+        binding.backButton.setOnClickListener {
+             parentFragmentManager.beginTransaction().remove(this).commit()
+        }
+    }
+
+    private suspend fun setImage(pkmnImg: String?, imgView: ImageView) {
+        withContext(Dispatchers.Main) {
+            Glide.with(imgView.context).load(pkmnImg).into(imgView)
         }
     }
 

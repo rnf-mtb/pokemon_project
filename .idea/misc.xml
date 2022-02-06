@@ -3,15 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/border_layout.xml" value="0.24461538461538462" />
         <entry key="app/src/main/res/layout/activity_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_layout_2.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14583333333333334" />
+        <entry key="app/src/main/res/layout/border_layout.xml" value="0.20052083333333334" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.153125" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.12135416666666667" />
         <entry key="app/src/main/res/layout/loading_item_list.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/layout/pokemon_detail.xml" value="0.17350557244174267" />
         <entry key="app/src/main/res/layout/pokemon_info_fragment.xml" value="0.21666666666666667" />
-        <entry key="app/src/main/res/layout/pokemon_item_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/pokemon_item_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/pokemon_list.xml" value="0.21041666666666667" />
         <entry key="app/src/main/res/layout/pokemon_list_fragment.xml" value="0.21666666666666667" />
       </map>

@@ -54,6 +54,11 @@ class PokemonListViewActivity : AppCompatActivity(){
         goToList("")
     }
 
+    override fun onResume() {
+        super.onResume()
+        goToList("")
+    }
+
     private fun goToList(pkmnName: String){
         supportFragmentManager
             .beginTransaction()
@@ -70,9 +75,13 @@ class PokemonListViewActivity : AppCompatActivity(){
 
     private fun goToDetail(pkmn: Pokemon){
         Toast.makeText(this, String.format("going to detail for %s", pkmn.name), Toast.LENGTH_SHORT).show()
+        val fragment = PokemonDetailFragment()
+        val bundle = Bundle()
+        bundle.putParcelable(PokemonDetailFragment.DETAIL, pkmn)
+        fragment.arguments = bundle
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, PokemonDetailFragment(), PokemonDetailFragment.TAG)
+            .add(R.id.container, fragment, PokemonDetailFragment.TAG)
             .commit()
     }
 

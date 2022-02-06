@@ -5,5 +5,5 @@ object ConstantURL {
     const val POKEMON_API_ENDPOINT = "https://pokeapi.co/api/v2/"
     const val GET_DITTO = "https://pokeapi.co/api/v2/pokemon/ditto/"
     const val GET_POKEMON = "https://pokeapi.co/api/v2/pokemon/{info}/"
-    const val POKEMON_API_PAGE_SIZE = 20
+    const val POKEMON_API_PAGE_SIZE = 30
 }

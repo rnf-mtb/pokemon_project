@@ -40,6 +40,8 @@ android {
 
 dependencies {
 
+    ext.uniflow_version = '1.1.0'
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
@@ -96,6 +98,19 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     apply plugin: 'dagger.hilt.android.plugin'
+
+    //uniflow
+    // Core
+    implementation "org.uniflow-kt:uniflow-core:$uniflow_version"
+    testImplementation "org.uniflow-kt:uniflow-test:$uniflow_version"
+
+// Android
+    implementation "org.uniflow-kt:uniflow-android:$uniflow_version"
+    testImplementation "org.uniflow-kt:uniflow-android-test:$uniflow_version"
+
+// Extras
+    implementation "org.uniflow-kt:uniflow-saferesult:$uniflow_version"
+    implementation "org.uniflow-kt:uniflow-arrow:$uniflow_version"
 
     //kapt
     //implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"

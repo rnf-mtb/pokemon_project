@@ -15,6 +15,9 @@ interface RemotePokemonDAO {
     @GET("pokemon/{info}")
     suspend fun getPokemonFromInfo(@Path("info") info: String) : Pokemon
 
+    @GET("{url}")
+    suspend fun getPokemonImage(@Path("url") url: String) : Pokemon
+
     @GET("pokemon/{info}")
     suspend fun getPokemonFromInfoNew(@Path("info") info: String) : Pokemon
 

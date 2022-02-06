@@ -14,6 +14,7 @@ import javax.inject.Inject
 class PokemonRepository @Inject constructor(
     private val pokemonDAO: RemotePokemonDAO?
 ) {
+    suspend fun getPokemonImage(url: String) = pokemonDAO?.getPokemonImage(url)
     suspend fun getPokemonFromInfo(info : String) = pokemonDAO?.getPokemonFromInfo(info)
     suspend fun getAllPaged(page: Int) = pokemonDAO?.getAllPaged(page * ConstantURL.POKEMON_API_PAGE_SIZE)
     suspend fun getAll() = pokemonDAO?.getAll()
