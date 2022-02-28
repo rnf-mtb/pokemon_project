@@ -56,7 +56,7 @@ class PokemonListViewActivity : AppCompatActivity(){
         goToList("")
     }
 
-    @DelicateCoroutinesApi
+
     private fun goToList(pkmnName: String){
         supportFragmentManager
             .beginTransaction()

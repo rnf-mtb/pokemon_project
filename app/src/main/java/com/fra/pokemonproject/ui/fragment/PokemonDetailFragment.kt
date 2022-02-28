@@ -60,7 +60,6 @@ class PokemonDetailFragment : Fragment() {
         _pkmn.types?.forEach { type -> types += "${type.type?.name}, " }
         binding.type.text = "Types: ${types.substring(0, types.trim().length-1)}"
 
-
         binding.backButton.setOnClickListener {
              parentFragmentManager.beginTransaction().remove(this).commit()
         }

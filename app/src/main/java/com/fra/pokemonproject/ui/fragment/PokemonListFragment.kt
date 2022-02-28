@@ -30,7 +30,7 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-@DelicateCoroutinesApi
+
 @AndroidEntryPoint
 class PokemonListFragment : Fragment(), PokemonListAdapterListener {
     companion object{ val TAG = "PokemonListFragment" }
