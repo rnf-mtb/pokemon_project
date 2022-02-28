@@ -28,11 +28,15 @@ import kotlinx.coroutines.*
 import javax.inject.Inject
 import kotlin.system.measureTimeMillis
 
+@ExperimentalStdlibApi
 @AndroidEntryPoint
 class PokemonListViewActivity : AppCompatActivity(){
-    companion object { val TAG = "PokemonListViewActivity"}
+    companion object {
+        val TAG = "PokemonListViewActivity"
+    }
     private lateinit var activityBinding: ActivityLayoutBinding
     val pkmnVM : PokemonListViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,5 +1,6 @@
 package com.fra.pokemonproject.ui.vm
 
+import android.se.omapi.Session
 import android.util.Log
 import androidx.lifecycle.*
 import com.fra.pokemonproject.model.Pokemon
@@ -8,11 +9,13 @@ import com.fra.pokemonproject.model.PokemonResponse
 import com.fra.pokemonproject.model.PokemonResponseWrapper
 import com.fra.pokemonproject.repo.PokemonRepository
 import com.fra.pokemonproject.ui.event.PokemonEvent
+import com.fra.pokemonproject.utils.SessionDataManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.uniflow.android.AndroidDataFlow
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
+@ExperimentalStdlibApi
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(
     private val pokemonRepository: PokemonRepository
@@ -30,10 +33,12 @@ class PokemonListViewModel @Inject constructor(
         getAllPokemon(0)
     }
 
+    @ExperimentalStdlibApi
     fun getAllPokemon(page: Int) = viewModelScope.launch {
         try {
             Log.d("PokemonListViewModel", "trying getAllPokemon")
             val response = pokemonRepository.getAllPaged(page) //prende da una mappa in sessione per pagina (page) oppure chiama il servizio
+            SessionDataManager.setPkmnGenericMap(page, response?.results ?: listOf())
             _allPokemon.postValue(PokemonResponseWrapper("OK", response, page))
         } catch (e: Exception) {
             Log.d("PokemonListViewModel", "getAllPokemon KO - exception: ${e.message}")
