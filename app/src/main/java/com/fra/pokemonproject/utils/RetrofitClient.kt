@@ -10,14 +10,14 @@ class RetrofitClient {
     private var retrofit: Retrofit? = null
 
     fun getClient(baseUrl: String? = ""): Retrofit? {
-        Log.d("RetrofitClient", String.format("baseUrl is %s", baseUrl))
+        Log.d("RetrofitClient", "baseUrl is $baseUrl")
         if (retrofit == null) {
             retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
-        Log.d("RetrofitClient", String.format("retrofit is null? %b", retrofit == null))
+        Log.d("RetrofitClient", "retrofit is null? ${retrofit == null}")
         return retrofit
     }
 }

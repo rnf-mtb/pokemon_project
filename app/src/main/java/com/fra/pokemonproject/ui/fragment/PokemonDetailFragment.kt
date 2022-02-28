@@ -16,10 +16,7 @@ import com.fra.pokemonproject.R
 import com.fra.pokemonproject.databinding.PokemonDetailBinding
 import com.fra.pokemonproject.model.Pokemon
 import com.fra.pokemonproject.ui.activity.PokemonListViewActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -46,6 +43,7 @@ class PokemonDetailFragment : Fragment() {
 
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,6 +54,11 @@ class PokemonDetailFragment : Fragment() {
             setImage(_pkmn.sprites?.back_shiny, binding.img4)
         }
 
+        binding.name.text = "Name: ${_pkmn.name}"
+
+        var types = ""
+        _pkmn.types?.forEach { type -> types += "${type.type?.name}, " }
+        binding.type.text = "Types: ${types.substring(0, types.trim().length-1)}"
 
 
         binding.backButton.setOnClickListener {

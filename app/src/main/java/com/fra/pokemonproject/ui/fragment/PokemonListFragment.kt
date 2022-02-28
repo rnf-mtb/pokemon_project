@@ -138,10 +138,13 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
             "OK" -> resp.pokemonResponse?.results?.forEach { singlePokemon ->
                 Toast.makeText(context, "OK fillListWithSinglePokemonInfo", Toast.LENGTH_SHORT).show()
 
-                if (_pkmnList.find { it.name == singlePokemon?.name } != null) {
-                    _pkmnList.find { it.name == singlePokemon?.name }.let {
-                        it?.sprites = singlePokemon?.sprites
+                if (_pkmnList.find { it.name == singlePokemon.name } != null) {
+                    _pkmnList.find { it.name == singlePokemon.name }.let {
+                        it?.sprites = singlePokemon.sprites
                         pokemonListAdapter.setPokemonList(_pkmnList, _currentPage, this)
+                        it?.moves = singlePokemon.moves
+                        it?.stats = singlePokemon.stats
+                        it?.types = singlePokemon.types
                     }
                 } else {
                     Log.d(TAG, String.format("pokemon %s not found", singlePokemon?.name))

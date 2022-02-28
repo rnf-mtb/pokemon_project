@@ -1,4 +1,5 @@
 package com.fra.pokemonproject.model
+import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -24,7 +25,19 @@ data class Pokemon(
     var sprites : Aspect? = null,
     var stats : List<PokemonStats>? = null,
     var types : List<PokemonTypes>? = null,
+    var moves : List<Moves>? = null,
     var localImgPath : String = ""
+) : Parcelable
+
+@Parcelize
+data class Moves(
+    val move : Move? = null
+) :Parcelable
+
+@Parcelize
+data class Move (
+    val name : String = "",
+    val url : String = ""
 ) : Parcelable
 
 @Parcelize

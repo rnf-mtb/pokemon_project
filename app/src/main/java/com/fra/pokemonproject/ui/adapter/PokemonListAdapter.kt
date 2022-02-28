@@ -71,7 +71,7 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun setPokemonList(pkmnList: List<Pokemon>, page: Int, pokemonListAdapterListener: PokemonListAdapterListener) {
         Log.d(TAG, String.format("setPokemonList"))
         _pkmnListAdapterListener = pokemonListAdapterListener
-        Log.d(TAG, String.format("pkmnList size %d", _pkmnList.size))
+        Log.d(TAG, "pkmnList size ${_pkmnList.size}")
         if(page == 0) {
             //_pkmnList.clear()
         } else {
@@ -80,7 +80,7 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
         //_pkmnList.clear()
         _pkmnList.addAll(pkmnList)
-        Log.d(TAG, String.format("notifyDataSetChanged done _pkmnList size is %d", _pkmnList.size))
+        Log.d(TAG, "notifyDataSetChanged done _pkmnList size is ${_pkmnList.size}")
         addLoadingFooter()
 
         notifyDataSetChanged()
@@ -111,11 +111,11 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun addLoadingFooter() {
         isLoadingAdded = true
         add(Pokemon("", "", null))
-        Log.d(TAG, String.format("addLoadingFooter pkmnList %d", _pkmnList.size))
+        Log.d(TAG, "addLoadingFooter pkmnList ${_pkmnList.size}")
     }
 
     fun removeLoadingFooter() {
-        Log.d(TAG, String.format("removeLoadingFooter pkmnList %d", _pkmnList.size))
+        Log.d(TAG, "removeLoadingFooter pkmnList ${_pkmnList.size}")
         isLoadingAdded = false
         val footerPosition: Int = _pkmnList.size - 1
         if(getItem(footerPosition) != null) {
@@ -138,7 +138,7 @@ class PokemonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun clear(){
         Log.d(TAG, String.format("clearing"))
         _pkmnList.clear()
-        Log.d(TAG, String.format("_pkmnList size %d ",_pkmnList.size))
+        Log.d(TAG, "_pkmnList size ${_pkmnList.size} ")
     }
 
     private fun getItem(position: Int): Pokemon? {

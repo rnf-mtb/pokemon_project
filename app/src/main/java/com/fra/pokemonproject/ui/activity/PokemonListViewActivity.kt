@@ -24,10 +24,7 @@ import com.fra.pokemonproject.ui.fragment.PokemonListFragment
 import com.fra.pokemonproject.ui.vm.NavigationEvent
 import com.fra.pokemonproject.ui.vm.PokemonListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 import kotlin.system.measureTimeMillis
 
@@ -59,6 +56,7 @@ class PokemonListViewActivity : AppCompatActivity(){
         goToList("")
     }
 
+    @DelicateCoroutinesApi
     private fun goToList(pkmnName: String){
         supportFragmentManager
             .beginTransaction()
@@ -74,7 +72,7 @@ class PokemonListViewActivity : AppCompatActivity(){
     }
 
     private fun goToDetail(pkmn: Pokemon){
-        Toast.makeText(this, String.format("going to detail for %s", pkmn.name), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "going to detail for ${pkmn.name}", Toast.LENGTH_SHORT).show()
         val fragment = PokemonDetailFragment()
         val bundle = Bundle()
         bundle.putParcelable(PokemonDetailFragment.DETAIL, pkmn)

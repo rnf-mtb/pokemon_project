@@ -36,7 +36,7 @@ class PokemonListViewModel @Inject constructor(
             val response = pokemonRepository.getAllPaged(page) //prende da una mappa in sessione per pagina (page) oppure chiama il servizio
             _allPokemon.postValue(PokemonResponseWrapper("OK", response, page))
         } catch (e: Exception) {
-            Log.d("PokemonListViewModel", String.format("getAllPokemon KO - exception: %s", e.message))
+            Log.d("PokemonListViewModel", "getAllPokemon KO - exception: ${e.message}")
             _allPokemon.postValue(PokemonResponseWrapper("KO"))
         }
     }
@@ -68,15 +68,12 @@ class PokemonListViewModel @Inject constructor(
     suspend fun getPokemonListMoreInfo(pokemon: List<Pokemon>) = withContext(Dispatchers.IO) {
         Log.d("PokemonListViewModel", "trying getSinglePokemon")
         try {
-            val pokemons = mutableListOf<Pokemon>()
             for(pkmn in pokemon) {
-                pokemons.add(
-                    GlobalScope.async {
-                        pokemonRepository.getPokemonFromInfo(pkmn.name) ?: Pokemon() //va a guardare in sessione se é presente uno dei dati contenuti
-                    }.await()
-                )
+                val pkmn = GlobalScope.async {
+                    pokemonRepository.getPokemonFromInfo(pkmn.name) ?: Pokemon() //va a guardare in sessione se é presente uno dei dati contenuti
+                }.await()
+                _pokemon.postValue(PokemonResponseWrapper("OK", PokemonResponse(0, null, null, listOf(pkmn))))
             }
-            _pokemon.postValue(PokemonResponseWrapper("OK", PokemonResponse(0, null, null, pokemons)))
         } catch (e: Exception) {
             Log.d("PokemonListViewModel", String.format("getSinglePokemon KO - exception: %s", e.message))
             _pokemon.postValue(PokemonResponseWrapper("KO"))
