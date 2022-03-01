@@ -6,21 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.fra.pokemonproject.R
 import com.fra.pokemonproject.databinding.PokemonDetailBinding
 import com.fra.pokemonproject.model.Pokemon
-import com.fra.pokemonproject.ui.activity.PokemonListViewActivity
+import com.fra.pokemonproject.ui.adapter.PokemonAtkListAdapter
+import com.fra.pokemonproject.ui.adapter.PokemonStatsListAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
+@AndroidEntryPoint
 class PokemonDetailFragment : Fragment() {
     companion object {
         val TAG = "PokemonDetailFragment"
@@ -28,6 +26,10 @@ class PokemonDetailFragment : Fragment() {
     }
     private var _binding: PokemonDetailBinding? = null
     private var _pkmn = Pokemon()
+    @Inject
+    lateinit var pokemonAtkListAdapter: PokemonAtkListAdapter
+    @Inject
+    lateinit var pokemonStatsListAdapter: PokemonStatsListAdapter
 
     private val binding get() = _binding!!
 
@@ -59,6 +61,18 @@ class PokemonDetailFragment : Fragment() {
         var types = ""
         _pkmn.types?.forEach { type -> types += "${type.type?.name}, " }
         binding.type.text = "Types: ${types.substring(0, types.trim().length-1)}"
+
+
+        binding.atksRv.apply{
+            pokemonAtkListAdapter.setAtkList(_pkmn.moves ?: listOf())
+            adapter = pokemonAtkListAdapter
+            setHasFixedSize(true)
+        }
+        binding.statsRv.apply{
+            pokemonStatsListAdapter.setStatsList(_pkmn.stats ?: listOf())
+            adapter = pokemonStatsListAdapter
+            setHasFixedSize(true)
+        }
 
         binding.backButton.setOnClickListener {
              parentFragmentManager.beginTransaction().remove(this).commit()

@@ -29,21 +29,25 @@ object SessionDataManager {
         try {
             // restituisce un json
             var tempPkmnMapJson = getPkmnGenericMapJson()
-
+            Log.d(TAG, "riga 32")
             //converto in mappa
-            val jsonAdapter: JsonAdapter<MutableMap<Int, List<Pokemon>>> = _moshi.adapter()
-            val map: MutableMap<Int, List<Pokemon>> =
-                jsonAdapter.fromJson(tempPkmnMapJson) ?: mutableMapOf()
+            val jsonAdapter: JsonAdapter<SessionObject> = _moshi.adapter()
+            Log.d(TAG, "riga 35")
+            val sessionObj = jsonAdapter.fromJson(tempPkmnMapJson)
 
             //inserisco in coda
-            map[page] = pkmns
-            tempPkmnMapJson = jsonAdapter.toJson(map)
+            /*sessionObj = pkmns
+            tempPkmnMapJson = jsonAdapter.toJson(map)*/
 
             //metto in sessione
             _persistor.edit().putString(POKEMON_LIST, tempPkmnMapJson).apply()
         } catch (e : Exception){
             Log.d(TAG, "converting KO - exception: ${e.message}")
         }
-
     }
+}
+
+object SessionObject{
+    private val _page = 0
+    private val _list : MutableMap<Int, List<Pokemon>> = mutableMapOf()
 }

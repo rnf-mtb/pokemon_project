@@ -38,7 +38,7 @@ class PokemonListViewModel @Inject constructor(
         try {
             Log.d("PokemonListViewModel", "trying getAllPokemon")
             val response = pokemonRepository.getAllPaged(page) //prende da una mappa in sessione per pagina (page) oppure chiama il servizio
-            SessionDataManager.setPkmnGenericMap(page, response?.results ?: listOf())
+            //SessionDataManager.setPkmnGenericMap(page, response?.results ?: listOf())
             _allPokemon.postValue(PokemonResponseWrapper("OK", response, page))
         } catch (e: Exception) {
             Log.d("PokemonListViewModel", "getAllPokemon KO - exception: ${e.message}")

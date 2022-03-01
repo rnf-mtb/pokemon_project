@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/layout/content_main.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.153125" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.12135416666666667" />
+        <entry key="app/src/main/res/layout/generic_pokemon_info.xml" value="0.14166666666666666" />
         <entry key="app/src/main/res/layout/loading_item_list.xml" value="0.13333333333333333" />
         <entry key="app/src/main/res/layout/pokemon_detail.xml" value="0.33" />
         <entry key="app/src/main/res/layout/pokemon_info_fragment.xml" value="0.21666666666666667" />
