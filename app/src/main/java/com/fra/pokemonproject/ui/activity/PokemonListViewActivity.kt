@@ -76,7 +76,7 @@ class PokemonListViewActivity : AppCompatActivity(){
     }
 
     private fun goToDetail(pkmn: Pokemon){
-        Toast.makeText(this, "going to detail for ${pkmn.name}", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "going to detail for ${pkmn.name}", Toast.LENGTH_SHORT).show()
         val fragment = PokemonDetailFragment()
         val bundle = Bundle()
         bundle.putParcelable(PokemonDetailFragment.DETAIL, pkmn)

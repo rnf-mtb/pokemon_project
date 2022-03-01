@@ -72,7 +72,7 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
             _responseWrapper = response
             when (response.status){
                 "OK" -> response.pokemonResponse?.results?.let { pokemonList ->
-                    Toast.makeText(context, "OK response.status", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "OK response.status", Toast.LENGTH_SHORT).show()
                     if (pokemonList.isEmpty()) {
                         _isLoading = false
                     }
@@ -86,7 +86,7 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
                 }
                 "KO" -> {
                     _isLoading = false
-                    Toast.makeText(context, "KO response.status", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "KO response.status", Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -137,7 +137,7 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
     private fun fillListWithListPokemonInfo(resp: PokemonResponseWrapper) {
         when (resp.status) {
             "OK" -> resp.pokemonResponse?.results?.forEach { singlePokemon ->
-                Toast.makeText(context, "OK fillListWithSinglePokemonInfo", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context, "OK fillListWithSinglePokemonInfo", Toast.LENGTH_SHORT).show()
 
                 if (_pkmnList.find { it.name == singlePokemon.name } != null) {
                     _pkmnList.find { it.name == singlePokemon.name }.let {
@@ -152,7 +152,7 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
                 }
             }
             "KO" -> {
-                Toast.makeText(context, "KO fillListWithSinglePokemonInfo", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context, "KO fillListWithSinglePokemonInfo", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -160,7 +160,7 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
     private fun fillListWithSinglePokemonInfo(resp: PokemonResponseWrapper?) {
         when (resp?.status) {
             "OK" -> resp.pokemonResponse?.results?.let { singlePokemon ->
-                Toast.makeText(context, "OK fillListWithSinglePokemonInfo", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context, "OK fillListWithSinglePokemonInfo", Toast.LENGTH_SHORT).show()
 
                 if (_pkmnList.find { it.name == singlePokemon.firstOrNull()?.name } != null) {
                     _pkmnList.find { it.name == singlePokemon.firstOrNull()?.name }.let {
@@ -172,7 +172,7 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
                 }
             }
             "KO" -> {
-                Toast.makeText(context, "KO fillListWithSinglePokemonInfo", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context, "KO fillListWithSinglePokemonInfo", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -183,7 +183,7 @@ class PokemonListFragment : Fragment(), PokemonListAdapterListener {
     }
 
     override fun onItemClick(pkmn: Pokemon) {
-        Toast.makeText(context, String.format("clicked %s", pkmn.name), Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, String.format("clicked %s", pkmn.name), Toast.LENGTH_SHORT).show()
         pkmnVM.navigate(NavigationEvent.Detail(pkmn))
     }
 }
